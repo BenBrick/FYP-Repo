@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BallMove : MonoBehaviour
 {
-    public float force = 1f;
-    public float speed = 2f;
+    public float force = 1.00f;
+    public float speed = 2.00f;
     public float minSpeed = 0.2f;
     public float slow = 0.99f;
     private Rigidbody rb;
@@ -21,11 +22,18 @@ public class BallMove : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Rigidbody playerRB = collision.gameObject.GetComponent<Rigidbody>();
-
+            
             if (playerRB != null)
             {
                 Vector3 dir = (transform.position - collision.transform.position).normalized;
-                rb.AddForce(dir * (force * playerRB.mass), ForceMode.Impulse);
+                Debug.Log($"Before collision - Velocity: {rb.velocity}");
+
+                Vector3 momentum = Vector3.Project(rb.velocity * rb.mass, dir);
+                rb.velocity -= momentum;
+
+                rb.AddForce(dir * (force * 5f), ForceMode.Impulse);
+
+                Debug.Log($"After collision - Velocity: {rb.velocity}");
             }
         }
     }
@@ -33,6 +41,7 @@ public class BallMove : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        
         if (rb.velocity.magnitude > speed)
         {
             rb.velocity = rb.velocity;
