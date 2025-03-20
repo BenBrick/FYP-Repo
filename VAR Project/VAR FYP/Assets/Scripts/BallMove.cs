@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class BallMove : MonoBehaviour
 {
-    public float force = 1.00f;
-    public float speed = 2.00f;
-    public float minSpeed = 0.2f;
-    public float slow = 0.99f;
+    private float force = 1.00f;
+    private float speed = 2.00f;
+    private float minSpeed = 0.2f;
+    private float slow = 0.99f;
     private Rigidbody rb;
     
     // Start is called before the first frame update

@@ -11,8 +11,8 @@ public class Rewind : MonoBehaviour
     private bool isPaused = false;
     private bool isFastForward = false;
     private bool isRunning = false;
-    public float recordTime = 5f;
-    List<PointInTime> pointsInTime;
+    private float recordTime = 10f;
+    public List<PointInTime> pointsInTime;
     List<PointInTime> previousPIT;
     Rigidbody rb;
     Animator animator;
@@ -43,8 +43,6 @@ public class Rewind : MonoBehaviour
         {
             ToggleFast();
         }
-
-        Animation();
     }
 
     private void FixedUpdate()
@@ -74,21 +72,6 @@ public class Rewind : MonoBehaviour
         else
         {
             Player();
-        }
-    }
-
-    public void Animation()
-    {
-        if (pointsInTime.Count > 1)
-        {
-            if(transform.position != pointsInTime[1].position)
-            {
-                animator.SetBool("isRunning", true);
-            }
-            else
-            {
-                animator.SetBool("isRunning", false);
-            }
         }
     }
 
