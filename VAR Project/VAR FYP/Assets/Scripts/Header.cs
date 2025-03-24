@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Profiling;
 
-public class Mover : MonoBehaviour
+public class Header : MonoBehaviour
 {
     GameObject[] goalLocations;
     NavMeshAgent agent;
     Rigidbody rb;
     Animator animator;
-    private bool Tackled = false;
+    private float force = 1.0f;
+    public bool Headed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,7 @@ public class Mover : MonoBehaviour
         agent = this.GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        goalLocations = GameObject.FindGameObjectsWithTag("goal");
+        goalLocations = GameObject.FindGameObjectsWithTag("goal2");
         StartAgent();
     }
 
@@ -32,15 +33,6 @@ public class Mover : MonoBehaviour
             animator.SetBool("isRunning", false);
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player2"))
-        {
-            Tackled = true;
-        }
-    }
-
     public void Animation()
     {
         PointInTime point = GetComponent<Rewind>().pointsInTime[0];
@@ -54,25 +46,30 @@ public class Mover : MonoBehaviour
             animator.SetBool("isRunning", false);
         }
 
-        if (Tackled)
+        if (agent.remainingDistance <= 1.0f && Headed == false)
         {
-            animator.SetBool("isTackled", true);
-            StopAgent();
+            StartCoroutine(HeaderAnim());
         }
+    }
 
-        if (gameObject.tag == "Player2")
-        {
-            if (agent.remainingDistance >= 1.5f)
-            {
-                animator.SetBool("isTackling", true);
-            }
-            else
-            {
-                StopAgent();
-                gameObject.transform.position = rb.transform.position;
-                animator.SetBool("isTackling", false);
-            }
-        }
+    private IEnumerator HeaderAnim()
+    {
+        //yield return new WaitForSecondsRealtime(0.07f);
+        
+        animator.SetBool("isRunning", false);
+        animator.SetBool("Heading", true);
+
+        yield return new WaitForSecondsRealtime(0.22f);
+        agent.isStopped = true;
+        agent.enabled = false;
+        rb.velocity = Vector3.zero;
+        Vector3 up = transform.up * (force * 65.0f);
+        rb.AddForce(up, ForceMode.Impulse);
+        
+        yield return new WaitForSeconds(1.5f);
+        
+        Headed = true;
+        animator.SetBool("Heading", false);
     }
 
     public void StartAgent()

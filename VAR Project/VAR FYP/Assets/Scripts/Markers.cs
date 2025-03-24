@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Profiling;
 
-public class Mover : MonoBehaviour
+public class Markers : MonoBehaviour
 {
     GameObject[] goalLocations;
     NavMeshAgent agent;
@@ -18,7 +18,7 @@ public class Mover : MonoBehaviour
         agent = this.GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        goalLocations = GameObject.FindGameObjectsWithTag("goal");
+        goalLocations = GameObject.FindGameObjectsWithTag("goal2");
         StartAgent();
     }
 
@@ -28,16 +28,8 @@ public class Mover : MonoBehaviour
         Animation();
         if (agent.remainingDistance < 0.5f)
         {
-            StopAgent();
+            agent.enabled = false;
             animator.SetBool("isRunning", false);
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player2"))
-        {
-            Tackled = true;
         }
     }
 
@@ -52,26 +44,6 @@ public class Mover : MonoBehaviour
         else
         {
             animator.SetBool("isRunning", false);
-        }
-
-        if (Tackled)
-        {
-            animator.SetBool("isTackled", true);
-            StopAgent();
-        }
-
-        if (gameObject.tag == "Player2")
-        {
-            if (agent.remainingDistance >= 1.5f)
-            {
-                animator.SetBool("isTackling", true);
-            }
-            else
-            {
-                StopAgent();
-                gameObject.transform.position = rb.transform.position;
-                animator.SetBool("isTackling", false);
-            }
         }
     }
 

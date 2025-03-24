@@ -6,6 +6,8 @@ TagManager:
   tags:
   - goal
   - Player2
+  - goal2
+  - HeaderPlayer
   layers:
   - Default
   - TransparentFX
