@@ -13,6 +13,7 @@ public class BallRewind : MonoBehaviour
     public float recordTime = 5f;
     List<PointInTime> pointsInTime;
     List<PointInTime> previousPIT;
+    List<PointInTime> originalPIT;
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -20,7 +21,9 @@ public class BallRewind : MonoBehaviour
     {
         pointsInTime = new List<PointInTime>();
         previousPIT = new List<PointInTime>();
+        originalPIT = new List<PointInTime>();
         rb = GetComponent<Rigidbody>();
+        originalPIT.Insert(0, new PointInTime(transform.position, transform.rotation));
     }
 
     // Update is called once per frame
@@ -39,6 +42,10 @@ public class BallRewind : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Backspace))
         {
             ToggleFast();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Restart();
         }
     }
 
@@ -71,6 +78,13 @@ public class BallRewind : MonoBehaviour
             Player();
         }
     }
+    
+    public void Restart()
+        {
+            transform.position = originalPIT[0].position;
+            transform.rotation = originalPIT[0].rotation;
+            GetComponent<BallCorner>().StartSpline();
+        }
 
     public void Recorder()
     {

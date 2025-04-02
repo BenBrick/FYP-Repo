@@ -18,7 +18,16 @@ public class Markers : MonoBehaviour
         agent = this.GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        goalLocations = GameObject.FindGameObjectsWithTag("goal2");
+        if (gameObject.tag == "M1")
+        {
+            goalLocations = GameObject.FindGameObjectsWithTag("goal3");
+        }
+
+        if (gameObject.tag == "M2")
+        {
+            goalLocations = GameObject.FindGameObjectsWithTag("goal4");
+        }
+        
         StartAgent();
     }
 
@@ -28,7 +37,7 @@ public class Markers : MonoBehaviour
         Animation();
         if (agent.remainingDistance < 0.5f)
         {
-            agent.enabled = false;
+            StopAgent();
             animator.SetBool("isRunning", false);
         }
     }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,6 +15,7 @@ public class Rewind : MonoBehaviour
     private float recordTime = 10f;
     public List<PointInTime> pointsInTime;
     List<PointInTime> previousPIT;
+    List<PointInTime> originalPIT;
     Rigidbody rb;
     Animator animator;
 
@@ -21,9 +23,11 @@ public class Rewind : MonoBehaviour
     void Start()
     {
         pointsInTime = new List<PointInTime>();
+        originalPIT = new List<PointInTime>();
         previousPIT = new List<PointInTime>();
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        originalPIT.Insert(0, new PointInTime(transform.position, transform.rotation));
     }
 
     // Update is called once per frame
@@ -43,20 +47,23 @@ public class Rewind : MonoBehaviour
         {
             ToggleFast();
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Restart();
+        }
     }
 
     private void FixedUpdate()
     {
-        if (isRewinding)
+        /*if (isRewinding)
         {
             Rewinder();
-        }
-        else
-        {
-            Recorder();
-        }
+        }*/
 
-        if (isFastForward)
+        Recorder();
+
+        /*if (isFastForward)
         {
             FastForwarder();
         }
@@ -72,10 +79,21 @@ public class Rewind : MonoBehaviour
         else
         {
             Player();
+        }*/
+    }
+
+    private void Restart()
+    {
+        transform.position = originalPIT[0].position;
+        transform.rotation = originalPIT[0].rotation;
+        if (gameObject.tag == "HeaderPlayer")
+        {
+            gameObject.GetComponent<Header>().Headed = false;
+            gameObject.GetComponent<Header>().Animation();
         }
     }
 
-    public void Recorder()
+    private void Recorder()
     {
         if (pointsInTime.Count > Mathf.Round(recordTime / Time.fixedDeltaTime))
         {
@@ -87,7 +105,7 @@ public class Rewind : MonoBehaviour
         previousPIT.Insert(0, new PointInTime(transform.position, transform.rotation));
     }
 
-    public void Rewinder()
+    /*private void Rewinder()
     {
         if (pointsInTime.Count > 0)
         {
@@ -98,7 +116,7 @@ public class Rewind : MonoBehaviour
         }
     }
 
-    public void FastForwarder()
+    private void FastForwarder()
     {
         if (previousPIT.Count > 0)
         {
@@ -111,30 +129,46 @@ public class Rewind : MonoBehaviour
         }
     }
 
-    public void Pauser()
+    private void Pauser()
     {
-        GetComponent<Mover>().StopAgent();
+        if (GetComponent<Mover>() != null)
+        {
+            GetComponent<Mover>().StopAgent();
+        }
+
+        if (GetComponent<Markers>() != null)
+        {
+            GetComponent<Markers>().StopAgent();
+        }
     }
 
-    public void Player()
+    private void Player()
     {
-        GetComponent<Mover>().ResumeAgent();
+        if (GetComponent<Mover>() != null)
+        {
+            GetComponent<Mover>().ResumeAgent();
+        }
+
+        if (GetComponent<Markers>() != null)
+        {
+            GetComponent<Markers>().ResumeAgent();
+        }
         
-    }
+    }*/
 
-    public void TogglePause()
+    private void TogglePause()
     {
         isPaused = !isPaused;
         rb.isKinematic = true;
     }
 
-    public void ToggleFast()
+    private void ToggleFast()
     {
         isFastForward = !isFastForward;
         rb.isKinematic = true;
     }
 
-    public void ToggleRewind()
+    private void ToggleRewind()
     {
         isRewinding = !isRewinding;
         rb.isKinematic = true;

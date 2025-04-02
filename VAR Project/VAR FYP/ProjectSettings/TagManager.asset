@@ -8,6 +8,10 @@ TagManager:
   - Player2
   - goal2
   - HeaderPlayer
+  - goal3
+  - goal4
+  - M1
+  - M2
   layers:
   - Default
   - TransparentFX

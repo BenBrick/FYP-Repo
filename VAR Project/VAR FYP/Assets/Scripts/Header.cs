@@ -20,7 +20,7 @@ public class Header : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         goalLocations = GameObject.FindGameObjectsWithTag("goal2");
-        StartAgent();
+        //StartAgent();
     }
 
     // Update is called once per frame
@@ -29,7 +29,7 @@ public class Header : MonoBehaviour
         Animation();
         if (agent.remainingDistance < 0.5f)
         {
-            StopAgent();
+            //StopAgent();
             animator.SetBool("isRunning", false);
         }
     }
@@ -61,7 +61,6 @@ public class Header : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(0.22f);
         agent.isStopped = true;
-        agent.enabled = false;
         rb.velocity = Vector3.zero;
         Vector3 up = transform.up * (force * 65.0f);
         rb.AddForce(up, ForceMode.Impulse);
@@ -72,7 +71,7 @@ public class Header : MonoBehaviour
         animator.SetBool("Heading", false);
     }
 
-    public void StartAgent()
+    /*public void StartAgent()
     {
         agent.SetDestination(goalLocations[0].transform.position);
     }
@@ -85,5 +84,5 @@ public class Header : MonoBehaviour
     public void StopAgent()
     {
         agent.isStopped = true;
-    }
+    }*/
 }
