@@ -12,6 +12,7 @@ TagManager:
   - goal4
   - M1
   - M2
+  - Player3
   layers:
   - Default
   - TransparentFX
