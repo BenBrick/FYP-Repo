@@ -13,6 +13,23 @@ TagManager:
   - M1
   - M2
   - Player3
+  - goal1
+  - goal5
+  - goal6
+  - goal7
+  - goal8
+  - goal9
+  - Player1
+  - Player6
+  - Player5
+  - Player11
+  - Player7
+  - Player8
+  - Player4
+  - Player10(2)
+  - Player5(2)
+  - goal3(2)
+  - KickPlayer
   layers:
   - Default
   - TransparentFX

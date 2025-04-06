@@ -91,6 +91,11 @@ public class Rewind : MonoBehaviour
             gameObject.GetComponent<Header>().Headed = false;
             gameObject.GetComponent<Header>().Animation();
         }
+        if (gameObject.tag == "KickPlayer")
+        {
+            gameObject.GetComponent<Kick>().Kicked = false;
+            gameObject.GetComponent<Kick>().Animation();
+        }
         if (gameObject.tag == "Player2")
         {
             gameObject.GetComponent<Dive>().dived = false;
