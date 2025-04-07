@@ -1,12 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class StartMenu : MonoBehaviour
 {
-    public void StartMenuu()
+
+    [SerializeField] Slider slider;
+    [SerializeField] GameObject canvas;
+    
+    public void LoadScene()
     {
-        SceneManager.LoadScene("Menu");
+        canvas.SetActive(true);
+        this.gameObject.SetActive(false);
+        AsyncOperation async = SceneManager.LoadSceneAsync(0);
+        while (!async.isDone)
+        {
+            slider.value = async.progress;
+        }
     }
+    
 }
