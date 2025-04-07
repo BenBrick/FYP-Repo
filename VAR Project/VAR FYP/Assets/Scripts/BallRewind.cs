@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class BallRewind : MonoBehaviour
 {
@@ -83,7 +84,16 @@ public class BallRewind : MonoBehaviour
         {
             transform.position = originalPIT[0].position;
             transform.rotation = originalPIT[0].rotation;
-            GetComponent<BallCorner>().StartSpline();
+            if (SceneManager.GetActiveScene().buildIndex == 1 || SceneManager.GetActiveScene().buildIndex == 3 || SceneManager.GetActiveScene().buildIndex == 4)
+            {
+                GetComponent<BallCorner>().StartSpline();
+            }
+
+            if (SceneManager.GetActiveScene().buildIndex == 2)
+            {
+                GetComponent<BallMove>().StartSpline();
+            }
+            
         }
 
     public void Recorder()

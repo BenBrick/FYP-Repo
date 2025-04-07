@@ -101,6 +101,11 @@ public class Rewind : MonoBehaviour
             gameObject.GetComponent<Dive>().dived = false;
             gameObject.GetComponent<Dive>().Animation();
         }
+        if (gameObject.tag == "DownedPlayer")
+        {
+            gameObject.GetComponent<Mover>().Tackled = false;
+            gameObject.GetComponent<Mover>().Animation();
+        }
     }
 
     private void Recorder()

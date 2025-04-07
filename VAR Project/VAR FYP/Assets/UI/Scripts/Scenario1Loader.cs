@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Scenario1Loader : MonoBehaviour
 {
-
-    [SerializeField] Slider slider;
-    [SerializeField] GameObject canvas;
+    [SerializeField] private Slider slider;
+    [SerializeField] GameObject loadingScreen;
+    [SerializeField] GameObject sceneLoader;
     
     public void LoadScene()
     {
-        canvas.SetActive(true);
-        this.gameObject.SetActive(false);
+        loadingScreen.SetActive(true);
+        sceneLoader.SetActive(false);
         AsyncOperation async = SceneManager.LoadSceneAsync(1);
-        while (!async.isDone)
-        {
-            slider.value = async.progress;
-        }
+        slider.value = async.progress;
     }
     
 }

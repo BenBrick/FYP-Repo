@@ -46,7 +46,7 @@ public class Markers : MonoBehaviour
     {
         PointInTime point = GetComponent<Rewind>().pointsInTime[0];
 
-        if (transform.position != point.position)
+        if (transform.position != goalLocations[0].transform.position)
         {
             animator.SetBool("isRunning", true);
         }

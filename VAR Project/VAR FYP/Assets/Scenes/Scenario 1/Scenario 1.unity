@@ -4573,7 +4573,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 947414696}
         m_TargetAssemblyTypeName: StartMenu, Assembly-CSharp
-        m_MethodName: StartMenuu
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8462,6 +8462,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79e3217ec3ba4d142baa107276456890, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 0}
+  canvas: {fileID: 0}
+  text: {fileID: 0}
 --- !u!114 &947414697
 MonoBehaviour:
   m_ObjectHideFlags: 0

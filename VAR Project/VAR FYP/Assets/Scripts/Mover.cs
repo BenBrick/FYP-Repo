@@ -10,7 +10,7 @@ public class Mover : MonoBehaviour
     NavMeshAgent agent;
     Rigidbody rb;
     Animator animator;
-    private bool Tackled = false;
+    public bool Tackled = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +26,7 @@ public class Mover : MonoBehaviour
     void FixedUpdate()
     {
         Animation();
-        if (agent.remainingDistance < 0.5f)
+        if (agent.remainingDistance < 0.7f)
         {
             StopAgent();
             animator.SetBool("isRunning", false);
@@ -35,7 +35,7 @@ public class Mover : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player2"))
+        if (collision.gameObject.CompareTag("TacklePlayer"))
         {
             Tackled = true;
         }
@@ -45,7 +45,7 @@ public class Mover : MonoBehaviour
     {
         PointInTime point = GetComponent<Rewind>().pointsInTime[0];
 
-        if (transform.position != point.position)
+        if (transform.position != goalLocations[0].transform.position)
         {
             animator.SetBool("isRunning", true);
         }
@@ -60,9 +60,15 @@ public class Mover : MonoBehaviour
             StopAgent();
         }
 
-        if (gameObject.tag == "Player2")
+        if (!Tackled)
         {
-            if (agent.remainingDistance >= 1.5f)
+            ResumeAgent();
+            animator.SetBool("isTackled", false);
+        }
+
+        if (gameObject.tag == "TacklePlayer")
+        {
+            if (agent.remainingDistance >= 1.2f)
             {
                 animator.SetBool("isTackling", true);
             }

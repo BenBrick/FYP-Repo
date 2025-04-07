@@ -2,57 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class BallMove : MonoBehaviour
 {
-    private float force = 1.00f;
-    private float speed = 2.00f;
-    private float minSpeed = 0.2f;
-    private float slow = 0.99f;
-    private Rigidbody rb;
-    
+    public SplineAnimate spline;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        StartSpline();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void StartSpline()
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Rigidbody playerRB = collision.gameObject.GetComponent<Rigidbody>();
-            
-            if (playerRB != null)
-            {
-                Vector3 dir = (transform.position - collision.transform.position).normalized;
-                Debug.Log($"Before collision - Velocity: {rb.velocity}");
-
-                Vector3 momentum = Vector3.Project(rb.velocity * rb.mass, dir);
-                rb.velocity -= momentum;
-
-                rb.AddForce(dir * (force * 5f), ForceMode.Impulse);
-
-                Debug.Log($"After collision - Velocity: {rb.velocity}");
-            }
-        }
+        StartCoroutine(moveBall());
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    private IEnumerator moveBall()
     {
-        
-        if (rb.velocity.magnitude > speed)
-        {
-            rb.velocity = rb.velocity;
-        }
-        else if (rb.velocity.magnitude > minSpeed)
-        {
-            rb.velocity *= slow;
-        }
-        else if (rb.velocity.magnitude <= 0.03f)
-        {
-            rb.velocity = Vector3.zero;
-        }
+        yield return new WaitForSeconds(0.5f);
+        spline.Restart(true);
     }
+
 }

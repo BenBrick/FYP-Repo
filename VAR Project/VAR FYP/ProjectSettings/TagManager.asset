@@ -30,6 +30,8 @@ TagManager:
   - Player5(2)
   - goal3(2)
   - KickPlayer
+  - TacklePlayer
+  - DownedPlayer
   layers:
   - Default
   - TransparentFX
