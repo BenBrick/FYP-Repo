@@ -55,6 +55,7 @@ public class Header : MonoBehaviour
         
         animator.SetBool("isRunning", false);
         animator.SetBool("Heading", true);
+        Headed = true;
 
         yield return new WaitForSecondsRealtime(0.22f);
         agent.isStopped = true;
@@ -63,8 +64,6 @@ public class Header : MonoBehaviour
         rb.AddForce(up, ForceMode.Impulse);
         
         yield return new WaitForSeconds(1.5f);
-        
-        Headed = true;
         animator.SetBool("Heading", false);
     }
 }
