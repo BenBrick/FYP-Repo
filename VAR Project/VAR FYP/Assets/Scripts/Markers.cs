@@ -44,7 +44,7 @@ public class Markers : MonoBehaviour
 
     public void Animation()
     {
-        PointInTime point = GetComponent<Rewind>().pointsInTime[0];
+        //PointInTime point = GetComponent<Rewind>().pointsInTime[0];
 
         if (transform.position != goalLocations[0].transform.position)
         {
